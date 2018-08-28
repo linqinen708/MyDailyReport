@@ -1,7 +1,9 @@
 package com.qyd.mydailyreport.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -9,6 +11,8 @@ import android.widget.AutoCompleteTextView;
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.bean.LoginBean;
+import com.qyd.mydailyreport.constants.MyExtra;
+import com.qyd.mydailyreport.constants.MyRequestCode;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
 import com.qyd.mydailyreport.retrofit.RxSubscribe;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
@@ -33,11 +37,26 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (MySharedPreferences.getInstance().getName() != null) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, HomeActivity2.class));
             finish();
         } else {
             setContentView(R.layout.activity_login);
             ButterKnife.bind(this);
+        }
+        mAutoCompleteTextViewAccount.setText(MySharedPreferences.getInstance().getAccount());
+        mAutoCompleteTextViewPassword.setText(MySharedPreferences.getInstance().getPassword());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == MyRequestCode.REGESTER) {
+                if (data != null) {
+                    mAutoCompleteTextViewAccount.setText(data.getStringExtra(MyExtra.ACCOUNT));
+                    mAutoCompleteTextViewPassword.setText(data.getStringExtra(MyExtra.PASSWORD));
+                }
+            }
         }
     }
 
@@ -58,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void httpPostLogin() {
 
-
         Map<String, Object> map = new HashMap<>();
         map.put("account", mAutoCompleteTextViewAccount.getText().toString());
         map.put("password", mAutoCompleteTextViewPassword.getText().toString());
@@ -72,16 +90,17 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribe(new RxSubscribe<LoginBean>(this) {
                     @Override
                     protected void _onNext(LoginBean bean) {
-                        LogT.i("bean:" + bean.getUserBean().getName() + ",bean.getDepartment():" + bean.getUserBean().getDepartment());
-                        MySharedPreferences.getInstance().setName(bean.getUserBean().getName());
-                        MySharedPreferences.getInstance().setDepartment(bean.getUserBean().getDepartment());
-                        MySharedPreferences.getInstance().setId(bean.getUserBean().getId());
-                        MySharedPreferences.getInstance().setToken(bean.getUserBean().getToken());
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        LogT.i(" ：" + bean.toString());
+                        MySharedPreferences.getInstance().setName(bean.getUser().getUser_name());
+                        MySharedPreferences.getInstance().setDepartment(bean.getUser().getDepartment());
+                        MySharedPreferences.getInstance().setId(bean.getUser().getId());
+                        MySharedPreferences.getInstance().setToken(bean.getUser().getToken());
+                        MySharedPreferences.getInstance().setPhone(bean.getUser().getPhone());
+                        startActivity(new Intent(LoginActivity.this, HomeActivity2.class));
                         finish();
                     }
                 })
-                ;
+        ;
 
     }
 
@@ -93,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                 httpPostLogin();
                 break;
             case R.id.btn_register:
-                startActivity(new Intent(this, RegisterActivity.class));
+                startActivityForResult(new Intent(this, RegisterActivity.class), MyRequestCode.REGESTER);
                 break;
         }
     }

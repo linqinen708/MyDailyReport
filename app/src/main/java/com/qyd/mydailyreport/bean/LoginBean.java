@@ -8,27 +8,28 @@ public class LoginBean {
 
 
     /**
-     * UserBean : {"id":2,"token":"573FD53BA45A4587B2A6F3CDE5710653","account":"linqinen708","password":"lin123456","department":"安卓","name":"lin123456"}
+     * user : {"id":33,"token":"6EEB37C705204F77992BADC16F7C42B3","account":"linqinen708","password":"lin123456","department":"Android","user_name":"林勤恩","phone":"18217088618"}
      */
 
-    private UserBeanBean UserBean;
+    private UserBean user;
 
-    public UserBeanBean getUserBean() {
-        return UserBean;
+    public UserBean getUser() {
+        return user;
     }
 
-    public void setUserBean(UserBeanBean UserBean) {
-        this.UserBean = UserBean;
+    public void setUser(UserBean user) {
+        this.user = user;
     }
 
-    public static class UserBeanBean {
+    public static class UserBean {
         /**
-         * id : 2
-         * token : 573FD53BA45A4587B2A6F3CDE5710653
+         * id : 33
+         * token : 6EEB37C705204F77992BADC16F7C42B3
          * account : linqinen708
          * password : lin123456
-         * department : 安卓
-         * name : lin123456
+         * department : Android
+         * user_name : 林勤恩
+         * phone : 18217088618
          */
 
         private int id;
@@ -36,7 +37,8 @@ public class LoginBean {
         private String account;
         private String password;
         private String department;
-        private String name;
+        private String user_name;
+        private String phone;
 
         public int getId() {
             return id;
@@ -78,12 +80,20 @@ public class LoginBean {
             this.department = department;
         }
 
-        public String getName() {
-            return name;
+        public String getUser_name() {
+            return user_name;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setUser_name(String user_name) {
+            this.user_name = user_name;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
         }
     }
 }

@@ -22,6 +22,7 @@ import com.aspsine.swipetoloadlayout.view.ClassicLoadMoreFooterView;
 import com.aspsine.swipetoloadlayout.view.TwitterRefreshHeaderView;
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
+import com.qyd.mydailyreport.activity.person.PersonalDataActivity;
 import com.qyd.mydailyreport.adapter.MyDailyReportDetailAdapter;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;

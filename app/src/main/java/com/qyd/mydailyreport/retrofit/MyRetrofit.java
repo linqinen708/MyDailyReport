@@ -21,11 +21,10 @@ import rx.functions.Func1;
 
 public class MyRetrofit {
 
-    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";//本地地址
-//    final String MAIN_ENGINE = "localhost:8090/";//本地地址
+//    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";//本地地址
+    final String MAIN_ENGINE = "http://192.168.61.252:8090/";//本地地址
 
     private static final int DEFAULT_TIMEOUT = 10;//默认超时时间
-    private Retrofit mRetrofit;
     private RetrofitServiceImpl mRetrofitServiceImpl;//Retrofit 接口
 
     public RetrofitServiceImpl getRetrofitServiceImpl() {
@@ -119,7 +118,6 @@ public class MyRetrofit {
         StringBuilder info = new StringBuilder();
         info.append(", 参数：");
         for (Map.Entry entry : map.entrySet()) {
-
             info.append((String) entry.getKey()).append(" = ").append(entry.getValue()).append(", ");
         }
 //        LogT.i("info:" + info);

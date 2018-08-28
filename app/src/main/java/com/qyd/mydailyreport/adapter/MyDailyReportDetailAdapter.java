@@ -2,6 +2,7 @@ package com.qyd.mydailyreport.adapter;
 
 import android.content.Context;
 
+import com.linqinen.library.adapter.BasicBindingAdapter;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
 import com.qyd.mydailyreport.databinding.AdapterMyDailyReportDetailBinding;
@@ -10,7 +11,7 @@ import com.qyd.mydailyreport.databinding.AdapterMyDailyReportDetailBinding;
  * Created by 林 on 2017/10/11.
  */
 
-public class MyDailyReportDetailAdapter extends BasicBindingAdapter2<ReportDetailBean.ReportDetailListBean,AdapterMyDailyReportDetailBinding> {
+public class MyDailyReportDetailAdapter extends BasicBindingAdapter<ReportDetailBean.ReportDetailListBean,AdapterMyDailyReportDetailBinding> {
 
 
     public MyDailyReportDetailAdapter(Context context) {
@@ -24,7 +25,7 @@ public class MyDailyReportDetailAdapter extends BasicBindingAdapter2<ReportDetai
 
     @Override
     protected void onBindItem(AdapterMyDailyReportDetailBinding binding, ReportDetailBean.ReportDetailListBean item) {
-        binding.setReportDetailListBean(item);
+        binding.setMBean(item);
     }
 
 

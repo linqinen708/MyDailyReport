@@ -1,13 +1,16 @@
 package com.qyd.mydailyreport.retrofit;
 
+import com.qyd.mydailyreport.activity.person.PersonalInfoBody;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
+import com.qyd.mydailyreport.body.RegisterBody;
 
 import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -17,6 +20,11 @@ import rx.Observable;
 
 /**
  * Created by 林 on 2017/9/30.
+ *
+ * https://www.cnblogs.com/peitong/p/5981207.html
+ *
+ * 如果请求为post实现，那么最好传递参数时使用@Field、@FieldMap和@FormUrlEncoded。
+ * 因为@Query和或QueryMap都是将参数拼接在url后面的，而@Field或@FieldMap传递的参数时放在请求体的。
  */
 
 public interface RetrofitServiceImpl {
@@ -38,13 +46,12 @@ public interface RetrofitServiceImpl {
 
     /**注册*/
     @POST("/registerAccountByPost")
-    @FormUrlEncoded
-    Observable<HttpResult<LoginBean>> registerAccountByPost(@FieldMap Map<String, Object> map);
+    Observable<HttpResult<LoginBean>> registerAccountByPost(@Body RegisterBody body);
+//    Observable<HttpResult<UserBean>> registerAccountByPost(@FieldMap Map<String, Object> map);
 
     /**修改个人资料*/
     @POST("/updatePersonalData")
-    @FormUrlEncoded
-    Observable<HttpResult<EmptyObject>> updatePersonalData(@FieldMap Map<String, Object> map);
+    Observable<HttpResult<EmptyObject>> updatePersonalData(@Body PersonalInfoBody body);
 
     /**查看个人所有历史日报*/
     @POST("/getReportDetailList")

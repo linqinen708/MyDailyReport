@@ -115,6 +115,34 @@ public class MySharedPreferences {
         }
         mSharedPreferences.edit().putString("token", token).apply();
     }
+    /**账号*/
+    public String getAccount() {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        return mSharedPreferences.getString("account",null);
+    }
+
+    public void setAccount(String account) {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        mSharedPreferences.edit().putString("account", account).apply();
+    }
+    /**密码*/
+    public String getPassword() {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        return mSharedPreferences.getString("password",null);
+    }
+
+    public void setPassword(String password) {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        mSharedPreferences.edit().putString("password", password).apply();
+    }
     /**姓名*/
     public String getName() {
         if(mSharedPreferences == null){
@@ -143,6 +171,20 @@ public class MySharedPreferences {
             throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
         }
         mSharedPreferences.edit().putString("department", department).apply();
+    }
+    /**手机号*/
+    public String getPhone() {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        return mSharedPreferences.getString("phone",null);
+    }
+
+    public void setPhone(String phone) {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        mSharedPreferences.edit().putString("phone", phone).apply();
     }
 
 

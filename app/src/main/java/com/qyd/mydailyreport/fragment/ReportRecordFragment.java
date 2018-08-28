@@ -10,7 +10,7 @@ import android.widget.CalendarView;
 
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
-import com.qyd.mydailyreport.activity.HomeActivity2;
+import com.qyd.mydailyreport.activity.BasicActivity;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.databinding.FragmentReportRecordBinding;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
@@ -82,7 +82,7 @@ public class ReportRecordFragment extends BasicFragment {
 
         Map<String, Object> map = new HashMap<>();
         map.put("date", date);
-        map.put("token", HomeActivity2.token);
+        map.put("token", BasicActivity.token);
 
         LogT.i("map:" + MyRetrofit.getParameters(map));
         MyRetrofit.getInstance()

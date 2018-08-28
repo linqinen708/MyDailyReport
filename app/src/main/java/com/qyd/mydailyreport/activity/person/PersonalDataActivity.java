@@ -1,35 +1,32 @@
-package com.qyd.mydailyreport.activity;
+package com.qyd.mydailyreport.activity.person;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
+import com.qyd.mydailyreport.activity.BasicActivity;
 import com.qyd.mydailyreport.retrofit.EmptyObject;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
 import com.qyd.mydailyreport.retrofit.RxSubscribe;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PersonalDataActivity extends AppCompatActivity {
+public class PersonalDataActivity extends BasicActivity {
 
     @BindView(R.id.et_name)
     EditText mEtName;
     @BindView(R.id.et_department)
     EditText mEtDepartment;
+    @BindView(R.id.et_phone)
+    EditText mEtPhone;
 
-    private String name, department;
-    private int id;
+    private String name, department, phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +36,11 @@ public class PersonalDataActivity extends AppCompatActivity {
 
         name = MySharedPreferences.getInstance().getName();
         department = MySharedPreferences.getInstance().getDepartment();
-        id = MySharedPreferences.getInstance().getId();
+        phone = MySharedPreferences.getInstance().getPhone();
 
         mEtName.setText(name);
         mEtDepartment.setText(department);
+        mEtPhone.setText(phone);
 
     }
 
@@ -51,19 +49,14 @@ public class PersonalDataActivity extends AppCompatActivity {
      */
     private void updatePersonalData() {
 
-        name = mEtName.getText().toString();
         department = mEtDepartment.getText().toString();
+        name = mEtName.getText().toString();
+        phone = mEtPhone.getText().toString();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("department", department);
-        map.put("name", name);
-
-        LogT.i("map:" + MyRetrofit.getParameters(map));
 
         MyRetrofit.getInstance()
                 .getRetrofitServiceImpl()
-                .updatePersonalData(map)//发送http请求
+                .updatePersonalData(new PersonalInfoBody(department,name,phone))//发送http请求
                 .map(new MyRetrofit.ServerResponseFunc<EmptyObject>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//主线程启动观察者执行下面代码
@@ -72,6 +65,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                     protected void _onNext(EmptyObject bean) {
                         MySharedPreferences.getInstance().setName(name);
                         MySharedPreferences.getInstance().setDepartment(department);
+                        MySharedPreferences.getInstance().setPhone(phone);
                         Toast.makeText(getBaseContext(), "修改成功", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -80,8 +74,16 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.btn_save)
-    public void onViewClicked() {
-        updatePersonalData();
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_save:
+                updatePersonalData();
+                break;
+//            case R.id.:
+//                break;
+            default:
+                break;
+        }
     }
+
 }

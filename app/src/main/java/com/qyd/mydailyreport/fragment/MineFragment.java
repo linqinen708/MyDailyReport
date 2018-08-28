@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.linqinen.library.widget.CircleImageView;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.activity.LoginActivity;
+import com.qyd.mydailyreport.activity.person.PersonalDataActivity;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import butterknife.BindView;
@@ -36,18 +39,23 @@ public class MineFragment extends BasicFragment {
     Unbinder unbinder;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        mTvName.setText(MySharedPreferences.getInstance().getName());
-        mTvDepartment.setText(MySharedPreferences.getInstance().getDepartment());
-
-
         return view;
     }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mTvName.setText(MySharedPreferences.getInstance().getName());
+        mTvDepartment.setText(MySharedPreferences.getInstance().getDepartment());
+        mTvPhone.setText(MySharedPreferences.getInstance().getPhone());
+    }
 
     @Override
     public void onDestroyView() {
@@ -55,20 +63,35 @@ public class MineFragment extends BasicFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.btn_exit)
-    public void onViewClicked() {
 
-        new AlertDialog.Builder(getActivity())
-                .setTitle("是否退出当前账号[" + MySharedPreferences.getInstance().getName() + "]？")
-                .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        MySharedPreferences.getInstance().setName(null);
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().finish();
-                    }
-                })
-                .setNegativeButton("取消", null)
-                .show();
+    /**
+     * Fragment中使用toolbar
+     * https://www.cnblogs.com/mengdd/p/5590634.html
+     */
+//    private void initToolbar(){
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//    }
+
+    @OnClick({R.id.textView9, R.id.btn_exit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.textView9:
+                startActivity(new Intent(getContext(), PersonalDataActivity.class));
+                break;
+            case R.id.btn_exit:
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("是否退出当前账号[" + MySharedPreferences.getInstance().getName() + "]？")
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MySharedPreferences.getInstance().setName(null);
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+                break;
+        }
     }
 }

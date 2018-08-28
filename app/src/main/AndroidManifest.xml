@@ -35,7 +35,7 @@
             android:name=".activity.UpdateOldReportActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
-        <activity android:name=".activity.PersonalDataActivity">
+        <activity android:name=".activity.person.PersonalDataActivity">
         </activity>
         <activity android:name=".activity.HomeActivity2">
         </activity>

@@ -2,7 +2,6 @@ package com.qyd.mydailyreport.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
 
 import com.linqinen.library.adapter.MyFragmentPagerAdapter;
 import com.linqinen.library.widget.NoScrollViewPager;
@@ -15,14 +14,13 @@ import com.qyd.mydailyreport.utils.MySharedPreferences;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity2 extends AppCompatActivity {
+public class HomeActivity2 extends BasicActivity {
 
     @BindView(R.id.viewPager)
     NoScrollViewPager mViewPager;
     @BindView(R.id.tabLayout)
     TabLayout mTabLayout;
 
-    public static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +32,7 @@ public class HomeActivity2 extends AppCompatActivity {
         ButterKnife.bind(this);
 
         token = MySharedPreferences.getInstance().getToken();
-
+        id = MySharedPreferences.getInstance().getId();
         initViewPager();
     }
 

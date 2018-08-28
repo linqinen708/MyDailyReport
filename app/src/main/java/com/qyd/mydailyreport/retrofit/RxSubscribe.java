@@ -1,11 +1,11 @@
 package com.qyd.mydailyreport.retrofit;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
 import com.linqinen.library.utils.LogT;
-import com.linqinen.library.widget.MyProgressDialog;
 
 import java.net.SocketTimeoutException;
 
@@ -18,7 +18,7 @@ import rx.Subscriber;
 
 public abstract class RxSubscribe<T> extends Subscriber<T> {
     private Context mContext;
-    private MyProgressDialog dialog;
+    private ProgressDialog dialog;
     private String msg;
 
     /**
@@ -39,8 +39,8 @@ public abstract class RxSubscribe<T> extends Subscriber<T> {
 
     private void showProgressDialog() {
         if (dialog == null) {
-            dialog = new MyProgressDialog(mContext);
-            dialog.setTitle(msg);
+            dialog = new ProgressDialog(mContext);
+            dialog.setMessage(msg);
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
@@ -80,11 +80,13 @@ public abstract class RxSubscribe<T> extends Subscriber<T> {
     public void onError(Throwable throwable) {
         LogT.i("出错了:" + throwable);
         if (throwable instanceof ServerException) {
-            Toast.makeText(mContext, ((ServerException) throwable).message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, ((ServerException) throwable).message, Toast.LENGTH_LONG).show();
         } else {
             throwable.printStackTrace();
             if (throwable instanceof SocketTimeoutException) {
-                Toast.makeText(mContext, "网络超时", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "网络超时", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(mContext, throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 //        if (TDevice.getNetworkType() == 0) {

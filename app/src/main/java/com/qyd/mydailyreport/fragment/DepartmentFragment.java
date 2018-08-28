@@ -84,7 +84,6 @@ public class DepartmentFragment extends BasicFragment {
 
     private void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mAdapter = new YyzProductDetailAdapter(this, mList);
         mAdapter = new MyDailyReportDetailAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
