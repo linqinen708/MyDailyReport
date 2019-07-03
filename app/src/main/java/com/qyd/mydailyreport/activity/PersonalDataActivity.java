@@ -9,7 +9,7 @@ import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.retrofit.EmptyObject;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import java.util.HashMap;
@@ -18,8 +18,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class PersonalDataActivity extends AppCompatActivity {
 
@@ -67,9 +67,9 @@ public class PersonalDataActivity extends AppCompatActivity {
                 .map(new MyRetrofit.ServerResponseFunc<EmptyObject>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//主线程启动观察者执行下面代码
-                .subscribe(new RxSubscribe<EmptyObject>(this) {
+                .subscribe(new RxSubscribe2<EmptyObject>(this) {
                     @Override
-                    protected void _onNext(EmptyObject bean) {
+                    public void onNext(EmptyObject bean) {
                         MySharedPreferences.getInstance().setName(name);
                         MySharedPreferences.getInstance().setDepartment(department);
                         Toast.makeText(getBaseContext(), "修改成功", Toast.LENGTH_SHORT).show();

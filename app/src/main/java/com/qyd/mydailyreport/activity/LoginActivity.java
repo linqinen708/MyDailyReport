@@ -2,7 +2,6 @@ package com.qyd.mydailyreport.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 
@@ -10,7 +9,7 @@ import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import java.util.HashMap;
@@ -19,10 +18,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BasicActivity {
 
     @BindView(R.id.autoCompleteTextView_account)
     AutoCompleteTextView mAutoCompleteTextViewAccount;
@@ -69,9 +68,10 @@ public class LoginActivity extends AppCompatActivity {
                 .map(new MyRetrofit.ServerResponseFunc<LoginBean>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<LoginBean>(this) {
+                .compose(this.<LoginBean>bindToLifecycle())
+                .subscribe(new RxSubscribe2<LoginBean>(getBaseContext()) {
                     @Override
-                    protected void _onNext(LoginBean bean) {
+                    public void onNext(LoginBean bean) {
                         LogT.i("bean:" + bean.getUserBean().getName() + ",bean.getDepartment():" + bean.getUserBean().getDepartment());
                         MySharedPreferences.getInstance().setName(bean.getUserBean().getName());
                         MySharedPreferences.getInstance().setDepartment(bean.getUserBean().getDepartment());
@@ -80,8 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     }
-                })
-                ;
+                });
 
     }
 

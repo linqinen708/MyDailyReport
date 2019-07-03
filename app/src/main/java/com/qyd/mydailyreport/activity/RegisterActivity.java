@@ -9,7 +9,7 @@ import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +17,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -53,9 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
                 .map(new MyRetrofit.ServerResponseFunc<LoginBean>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//主线程启动观察者执行下面代码
-                .subscribe(new RxSubscribe<LoginBean>(this) {
+                .subscribe(new RxSubscribe2<LoginBean>(this) {
                     @Override
-                    protected void _onNext(LoginBean bean) {
+                    public void onNext(LoginBean bean) {
                         LogT.i("bean:" + bean.toString());
                         Toast.makeText(getBaseContext(),"注册成功",Toast.LENGTH_SHORT).show();
                         finish();

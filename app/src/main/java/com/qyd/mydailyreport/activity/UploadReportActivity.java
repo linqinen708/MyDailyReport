@@ -13,7 +13,7 @@ import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.adapter.UploadReportAdapter;
 import com.qyd.mydailyreport.retrofit.EmptyObject;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.ServerException;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -24,9 +24,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**上传日报界面*/
 @SuppressLint("SetTextI18n")
@@ -99,22 +98,10 @@ public class UploadReportActivity extends BasicActivity {
                 .map(new MyRetrofit.ServerResponseFunc<EmptyObject>())//自定义的错误
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new Action1<EmptyObject>() {
+                .subscribe(new RxSubscribe2<EmptyObject>(getBaseContext()) {
                     @Override
-                    public void call(EmptyObject bean) {
-
-                        LogT.i("bean:" + bean.toString());
+                    public void onNext(EmptyObject bean) {
                         Toast.makeText(getBaseContext(),"发送成功",Toast.LENGTH_SHORT).show();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        LogT.i("出错了:" + throwable);
-                        if (throwable instanceof ServerException) {
-                            Toast.makeText(getBaseContext(), ((ServerException) throwable).message, Toast.LENGTH_SHORT).show();
-                        } else {
-                            throwable.printStackTrace();
-                        }
                     }
                 });
 

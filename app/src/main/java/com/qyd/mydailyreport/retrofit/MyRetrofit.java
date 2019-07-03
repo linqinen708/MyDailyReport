@@ -5,15 +5,15 @@ import com.linqinen.library.utils.LogT;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.functions.Func1;
 
 /**
  * Created by 林 on 2017/9/30.
@@ -21,7 +21,7 @@ import rx.functions.Func1;
 
 public class MyRetrofit {
 
-    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";//本地地址
+    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";
 //    final String MAIN_ENGINE = "localhost:8090/";//本地地址
 
     private static final int DEFAULT_TIMEOUT = 10;//默认超时时间
@@ -56,7 +56,7 @@ public class MyRetrofit {
                 .client(mOkHttpClient.build())//设置OkHttpClient
                 .baseUrl(MAIN_ENGINE)//设置服务器地址
                 .addConverterFactory(GsonConverterFactory.create())//添加Gson解析
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加RxJava支持
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加RxJava支持
         .build()
         .create(RetrofitServiceImpl.class);//创建Retrofit接口
 
@@ -97,15 +97,15 @@ public class MyRetrofit {
      *
      *           Func1的<I,O>I,O模版分别为输入和输出值的类型
      */
-    public static class ServerResponseFunc<T> implements Func1<HttpResult<T>, T> {
+    public static class ServerResponseFunc<T> implements Function<HttpResult<T>, T> {
 
         @Override
-        public T call(HttpResult<T> httpResult) {
+        public T apply(HttpResult<T> httpResult){
             //对返回码进行判断，如果不是0，则证明服务器端返回错误信息了，便根据跟服务器约定好的错误码去解析异常
 
             if (httpResult.getCode() != 0) {
                 //如果服务器端有错误信息返回，那么抛出异常，让下面的方法去捕获异常做统一处理
-               LogT.i("错误信息code:" + httpResult.getCode()+",getMessage"+httpResult.getMessage());
+                LogT.i("错误信息code:" + httpResult.getCode()+",getMessage"+httpResult.getMessage());
 //                Toast.makeText(MyApplicaiton.getMyApplicaiton(),httpResult.getMessage(),Toast.LENGTH_SHORT).show();
                 throw new ServerException(
                         httpResult.getCode(), httpResult.getMessage());

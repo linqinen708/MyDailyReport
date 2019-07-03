@@ -18,7 +18,7 @@ import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.adapter.MyDailyReportDetailAdapter;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +28,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by 林 on 2017/10/20.
@@ -103,9 +103,9 @@ public class DepartmentFragment extends BasicFragment {
                 .map(new MyRetrofit.ServerResponseFunc<ReportDetailBean>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<ReportDetailBean>(getActivity()) {
+                .subscribe(new RxSubscribe2<ReportDetailBean>(getActivity()) {
                     @Override
-                    protected void _onNext(ReportDetailBean bean) {
+                    public void onNext(ReportDetailBean bean) {
                         LogT.i("bean:" + bean.toString());
                         if (bean.getReportDetailList().size() > 0) {
                             mAdapter.getItems().clear();
