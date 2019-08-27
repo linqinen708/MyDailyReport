@@ -13,6 +13,13 @@ public class LoginBean {
 
     private UserBeanBean UserBean;
 
+    @Override
+    public String toString() {
+        return "LoginBean{" +
+                "UserBean=" + UserBean +
+                '}';
+    }
+
     public UserBeanBean getUserBean() {
         return UserBean;
     }
@@ -37,6 +44,18 @@ public class LoginBean {
         private String password;
         private String department;
         private String name;
+
+        @Override
+        public String toString() {
+            return "UserBeanBean{" +
+                    "id=" + id +
+                    ", token='" + token + '\'' +
+                    ", account='" + account + '\'' +
+                    ", password='" + password + '\'' +
+                    ", department='" + department + '\'' +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
 
         public int getId() {
             return id;

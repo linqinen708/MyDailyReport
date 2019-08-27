@@ -105,8 +105,8 @@ public class MyRetrofit {
 
             if (httpResult.getCode() != 0) {
                 //如果服务器端有错误信息返回，那么抛出异常，让下面的方法去捕获异常做统一处理
-                LogT.i("错误信息code:" + httpResult.getCode()+",getMessage"+httpResult.getMessage());
-//                Toast.makeText(MyApplicaiton.getMyApplicaiton(),httpResult.getMessage(),Toast.LENGTH_SHORT).show();
+                LogT.e("错误信息code:" + httpResult.getCode()+","+httpResult.getMessage());
+//                Toast.makeText(MyApplication.getMyApplicaiton(),httpResult.getMessage(),Toast.LENGTH_SHORT).show();
                 throw new ServerException(
                         httpResult.getCode(), httpResult.getMessage());
             }

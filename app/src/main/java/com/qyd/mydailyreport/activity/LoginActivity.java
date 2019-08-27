@@ -2,8 +2,10 @@ package com.qyd.mydailyreport.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
@@ -32,7 +34,7 @@ public class LoginActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (MySharedPreferences.getInstance().getName() != null) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, HomeActivity2.class));
             finish();
         } else {
             setContentView(R.layout.activity_login);
@@ -57,6 +59,12 @@ public class LoginActivity extends BasicActivity {
      */
     private void httpPostLogin() {
 
+        if(TextUtils.isEmpty(mAutoCompleteTextViewAccount.getText())){
+            Toast.makeText(getBaseContext(),"请输入账号",Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(mAutoCompleteTextViewPassword.getText())){
+            Toast.makeText(getBaseContext(),"请输入密码",Toast.LENGTH_SHORT).show();
+        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("account", mAutoCompleteTextViewAccount.getText().toString());
@@ -69,15 +77,19 @@ public class LoginActivity extends BasicActivity {
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
                 .compose(this.<LoginBean>bindToLifecycle())
-                .subscribe(new RxSubscribe2<LoginBean>(getBaseContext()) {
+                .subscribe(new RxSubscribe2<LoginBean>(this) {
                     @Override
                     public void onNext(LoginBean bean) {
-                        LogT.i("bean:" + bean.getUserBean().getName() + ",bean.getDepartment():" + bean.getUserBean().getDepartment());
+                        if(bean == null){
+                            Toast.makeText(getBaseContext(),"数据异常",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        LogT.i("bean:" + bean.toString());
                         MySharedPreferences.getInstance().setName(bean.getUserBean().getName());
                         MySharedPreferences.getInstance().setDepartment(bean.getUserBean().getDepartment());
                         MySharedPreferences.getInstance().setId(bean.getUserBean().getId());
                         MySharedPreferences.getInstance().setToken(bean.getUserBean().getToken());
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this, HomeActivity2.class));
                         finish();
                     }
                 });
