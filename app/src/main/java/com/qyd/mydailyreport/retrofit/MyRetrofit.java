@@ -16,13 +16,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by 林 on 2017/9/30.
+ * Created by Ian on 2017/9/30.
  */
 
 public class MyRetrofit {
 
-    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";
-//    final String MAIN_ENGINE = "localhost:8090/";//本地地址
+//    private final String MAIN_ENGINE = "http://47.100.229.22:8090/";
+    private static final String MAIN_ENGINE = "localhost:8090/";//本地地址
 
     private static final int DEFAULT_TIMEOUT = 10;//默认超时时间
     private Retrofit mRetrofit;
