@@ -26,7 +26,7 @@ import com.qyd.mydailyreport.activity.person.PersonalDataActivity;
 import com.qyd.mydailyreport.adapter.MyDailyReportDetailAdapter;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import java.util.HashMap;
@@ -35,8 +35,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends BasicActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnRefreshListener, OnLoadMoreListener {
@@ -147,9 +147,9 @@ public class HomeActivity extends BasicActivity
                 .map(new MyRetrofit.ServerResponseFunc<ReportDetailBean>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<ReportDetailBean>(this) {
+                .subscribe(new RxSubscribe2<ReportDetailBean>(this) {
                     @Override
-                    protected void _onNext(ReportDetailBean bean) {
+                    public void onNext(ReportDetailBean bean) {
                         LogT.i("bean:" + bean.toString());
                         if(pageNo == 1){
                             mAdapter.getItems().clear();

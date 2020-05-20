@@ -14,13 +14,13 @@ import com.qyd.mydailyreport.activity.BasicActivity;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.databinding.FragmentReportRecordBinding;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class ReportRecordFragment extends BasicFragment {
@@ -91,9 +91,9 @@ public class ReportRecordFragment extends BasicFragment {
                 .map(new MyRetrofit.ServerResponseFunc<CurrentReportDetailBean>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<CurrentReportDetailBean>(getActivity()) {
+                .subscribe(new RxSubscribe2<CurrentReportDetailBean>(getActivity()) {
                     @Override
-                    protected void _onNext(CurrentReportDetailBean bean) {
+                    public void onNext(CurrentReportDetailBean bean) {
                         LogT.i("bean:" + bean.toString());
                         binding.includeMyRecord.setReportDetailBeanBean(bean.getReportDetailBean());
 //                        if (bean.getReportDetailList().size() > 0) {

@@ -9,11 +9,11 @@ import com.qyd.mydailyreport.utils.MySharedPreferences;
  * Created by 林 on 2017/10/9.
  */
 
-public class MyApplicaiton extends Application {
+public class MyApplication extends Application {
 
-//    private static MyApplicaiton myApplicaiton;
+//    private static MyApplication myApplicaiton;
 
-//    public static MyApplicaiton getMyApplicaiton() {
+//    public static MyApplication getMyApplicaiton() {
 //        return myApplicaiton;
 //    }
 

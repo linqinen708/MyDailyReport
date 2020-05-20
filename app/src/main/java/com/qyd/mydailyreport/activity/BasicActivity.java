@@ -3,7 +3,8 @@ package com.qyd.mydailyreport.activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Created by 林 on 2017/10/12.
  */
 
-public class BasicActivity extends AppCompatActivity {
+public abstract class BasicActivity extends RxAppCompatActivity {
 
     public static String token = "";
     protected static int id;

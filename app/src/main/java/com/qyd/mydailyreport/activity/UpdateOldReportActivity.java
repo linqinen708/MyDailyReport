@@ -14,7 +14,7 @@ import com.qyd.mydailyreport.adapter.UploadReportAdapter;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.retrofit.EmptyObject;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe;
+import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("SetTextI18n")
 public class UpdateOldReportActivity extends AppCompatActivity {
@@ -89,9 +89,9 @@ public class UpdateOldReportActivity extends AppCompatActivity {
                 .map(new MyRetrofit.ServerResponseFunc<EmptyObject>())//自定义的错误
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<EmptyObject>(this) {
+                .subscribe(new RxSubscribe2<EmptyObject>(this) {
                     @Override
-                    protected void _onNext(EmptyObject emptyObject) {
+                    public void onNext(EmptyObject emptyObject) {
                         Toast.makeText(getBaseContext(), "发送成功", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -111,10 +111,10 @@ public class UpdateOldReportActivity extends AppCompatActivity {
                 .map(new MyRetrofit.ServerResponseFunc<CurrentReportDetailBean>())//自定义的错误
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
                 .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe<CurrentReportDetailBean>(this) {
+                .subscribe(new RxSubscribe2<CurrentReportDetailBean>(this) {
 
                     @Override
-                    protected void _onNext(CurrentReportDetailBean currentReportDetailBean) {
+                    public void onNext(CurrentReportDetailBean currentReportDetailBean) {
                         LogT.i("bean:" + currentReportDetailBean.toString());
                         name = currentReportDetailBean.getReportDetailBean().getName();
                         date = currentReportDetailBean.getReportDetailBean().getDate();
