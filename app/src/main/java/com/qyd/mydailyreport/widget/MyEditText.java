@@ -5,11 +5,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 /**
  * Created by 林 on 2017/10/18.
  */
 
-public class MyEditText extends android.support.v7.widget.AppCompatEditText {
+public class MyEditText extends AppCompatEditText {
 
 
     private AfterTextChangedListener mListener;

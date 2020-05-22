@@ -8,9 +8,10 @@
 
 
     <dimen name="adapter_my_daily_report_detail_size_1">16sp</dimen>
-    <dimen name="personal_size">20sp</dimen>
+    <dimen name="personal_size">15sp</dimen>
     <dimen name="my_record_size">20sp</dimen>
     <dimen name="my_record_detail_margin_start">20dp</dimen>
+    <dimen name="mine_height">45dp</dimen>
 
 
 </resources>

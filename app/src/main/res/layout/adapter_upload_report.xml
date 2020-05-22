@@ -7,7 +7,7 @@
     >
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
                                                  android:layout_width="match_parent"
                                                  android:layout_height="wrap_content"
                                                  >
@@ -56,6 +56,6 @@
             app:layout_constraintTop_toBottomOf="@+id/et_content"
             android:layout_marginLeft="18dp"
             app:layout_constraintLeft_toLeftOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

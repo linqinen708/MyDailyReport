@@ -1,6 +1,6 @@
 package com.qyd.mydailyreport.retrofit;
 
-import com.qyd.mydailyreport.activity.person.PersonalInfoBody;
+import com.qyd.mydailyreport.ui.activity.person.PersonalInfoBody;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
@@ -46,7 +46,7 @@ public interface RetrofitServiceImpl {
 
     /**注册*/
     @POST("/registerAccountByPost")
-    Observable<HttpResult<LoginBean>> registerAccountByPost(@Body RegisterBody body);
+    Observable<HttpResult<LoginBean>> registerAccount(@Body RegisterBody body);
 //    Observable<HttpResult<UserBean>> registerAccountByPost(@FieldMap Map<String, Object> map);
 
     /**修改个人资料*/

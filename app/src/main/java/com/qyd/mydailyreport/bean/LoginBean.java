@@ -8,7 +8,7 @@ public class LoginBean {
 
 
     /**
-     * user : {"id":33,"token":"6EEB37C705204F77992BADC16F7C42B3","account":"linqinen708","password":"lin123456","department":"Android","user_name":"林勤恩","phone":"18217088618"}
+     * user : {"id":33,"token":"6692DB5A61914B60AE9BE82FB89F2A20","account":"linqinen708","password":"lin123456","department":"Android","name":"林勤恩"}
      */
 
     private UserBean user;
@@ -24,12 +24,11 @@ public class LoginBean {
     public static class UserBean {
         /**
          * id : 33
-         * token : 6EEB37C705204F77992BADC16F7C42B3
+         * token : 6692DB5A61914B60AE9BE82FB89F2A20
          * account : linqinen708
          * password : lin123456
          * department : Android
-         * user_name : 林勤恩
-         * phone : 18217088618
+         * name : 林勤恩
          */
 
         private int id;
@@ -37,8 +36,16 @@ public class LoginBean {
         private String account;
         private String password;
         private String department;
-        private String user_name;
+        private String name;
         private String phone;
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
 
         public int getId() {
             return id;
@@ -80,20 +87,12 @@ public class LoginBean {
             this.department = department;
         }
 
-        public String getUser_name() {
-            return user_name;
+        public String getName() {
+            return name;
         }
 
-        public void setUser_name(String user_name) {
-            this.user_name = user_name;
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

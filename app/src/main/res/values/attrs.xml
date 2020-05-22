@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyCustomView03">
+        <!--步骤-->
+        <attr name="mcv03_title" format="string" />
+        <attr name="mcv03_title_color" format="color" />
+        <attr name="mcv03_title_size" format="integer" />
+        <attr name="mcv03_title_width" format="dimension" />
+        <attr name="mcv03_title_tag_visible" format="boolean" />
+        <attr name="mcv03_value" format="string" />
+        <attr name="mcv03_value_color" format="color" />
+        <attr name="mcv03_value_size" format="integer" />
+        <attr name="mcv03_value_gravity" format="enum">
+            <enum name="start" value="0" />
+            <enum name="middle" value="1" />
+            <enum name="end" value="2" />
+        </attr>
+        <attr name="mcv03_end_icon_visible" format="boolean" />
+        <attr name="mcv03_end_icon" format="reference" />
+        <attr name="mcv03_view_bottom_line_visible" format="boolean" />
+        <attr name="mcv03_single_line" format="boolean" />
+    </declare-styleable>
+
+</resources>

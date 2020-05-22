@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.BuildConfig;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import io.reactivex.Observer;
@@ -25,7 +26,6 @@ public class RxSubscribe2<T> implements Observer<T> {
     private String msg = "加载中...";
 
     private boolean isShowProgress = true;
-
 
 
     /**
@@ -124,6 +124,8 @@ public class RxSubscribe2<T> implements Observer<T> {
                     showErrorToast("参数异常", throwable.getMessage());
                 } else if (throwable instanceof HttpException) {
                     showErrorToast("网络异常", throwable.getMessage());
+                } else if (throwable instanceof ConnectException) {
+                    showErrorToast("服务器异常", throwable.getMessage());
                 } else {
                     Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
                 }
