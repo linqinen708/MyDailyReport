@@ -172,6 +172,20 @@ public class MySharedPreferences {
         }
         mSharedPreferences.edit().putString("department", department).apply();
     }
+    /**部门*/
+    public String getPosition() {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        return mSharedPreferences.getString("position",null);
+    }
+
+    public void setPosition(String position) {
+        if(mSharedPreferences == null){
+            throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        mSharedPreferences.edit().putString("position", position).apply();
+    }
     /**手机号*/
     public String getPhone() {
         if(mSharedPreferences == null){

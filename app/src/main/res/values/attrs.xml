@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="MyCustomView01">
+        <!--步骤-->
+        <attr name="mcv01_title" format="string" />
+        <attr name="mcv01_title_color" format="color" />
+        <attr name="mcv01_title_size" format="integer" />
+        <attr name="mcv01_title_width" format="dimension" />
+        <attr name="mcv01_title_tag_visible" format="boolean" />
+        <attr name="mcv01_value" format="string" />
+        <attr name="mcv01_value_color" format="color" />
+        <attr name="mcv01_value_size" format="integer" />
+        <attr name="mcv01_value_hint" format="string" />
+        <attr name="mcv01_value_length" format="integer" />
+        <attr name="mcv01_value_input_type">
+            <flag name="phone" value="1" />
+        </attr>
+        <attr name="mcv01_value_editable" format="boolean" />
+        <attr name="mcv01_end_icon_visible" format="boolean" />
+        <attr name="mcv01_end_icon" format="reference" />
+        <attr name="mcv01_view_bottom_line_visible" format="boolean" />
+        <attr name="mcv01_single_line" format="boolean" />
+    </declare-styleable>
+
+
     <declare-styleable name="MyCustomView03">
         <!--步骤-->
         <attr name="mcv03_title" format="string" />

@@ -2,15 +2,15 @@ package com.qyd.mydailyreport.ui.activity.person;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.retrofit.EmptyObject;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
 import com.qyd.mydailyreport.retrofit.RxSubscribe2;
 import com.qyd.mydailyreport.ui.activity.base.BaseActivity;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
+import com.qyd.mydailyreport.widget.MyCustomView01;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +19,15 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PersonalDataActivity extends BaseActivity {
 
-    @BindView(R.id.et_name)
-    EditText mEtName;
-    @BindView(R.id.et_department)
-    EditText mEtDepartment;
-    @BindView(R.id.et_phone)
-    EditText mEtPhone;
 
+    @BindView(R.id.mcv_name)
+    MyCustomView01 mMcvName;
+    @BindView(R.id.mcv_phone)
+    MyCustomView01 mMcvPhone;
+    @BindView(R.id.mcv_department)
+    MyCustomView01 mMcvDepartment;
+    @BindView(R.id.mcv_position)
+    MyCustomView01 mMcvPosition;
     private String name, department, phone;
 
     @Override
@@ -38,9 +40,12 @@ public class PersonalDataActivity extends BaseActivity {
         department = MySharedPreferences.getInstance().getDepartment();
         phone = MySharedPreferences.getInstance().getPhone();
 
-        mEtName.setText(name);
-        mEtDepartment.setText(department);
-        mEtPhone.setText(phone);
+        LogT.i("name:" + name + ",department :" + department + ",phone:" + phone);
+
+        mMcvName.setText(name);
+        mMcvDepartment.setText(department);
+        mMcvPhone.setText(phone);
+        mMcvPosition.setText(MySharedPreferences.getInstance().getPosition());
 
     }
 
@@ -50,9 +55,10 @@ public class PersonalDataActivity extends BaseActivity {
     private void updatePersonalData() {
 
         PersonalInfoBody body = new PersonalInfoBody();
-        body.setUser_name(mEtName.getText().toString());
-        body.setDepartment(mEtDepartment.getText().toString());
-        body.setPhone(mEtPhone.getText().toString());
+        body.setUser_name(mMcvName.getText().toString());
+        body.setDepartment(mMcvDepartment.getText().toString());
+        body.setPosition(mMcvPosition.getText().toString());
+        body.setPhone(mMcvPhone.getText().toString());
 
 
         MyRetrofit.getInstance()
@@ -64,10 +70,12 @@ public class PersonalDataActivity extends BaseActivity {
                 .subscribe(new RxSubscribe2<EmptyObject>(this) {
                     @Override
                     public void onNext(EmptyObject bean) {
-                        MySharedPreferences.getInstance().setName(name);
-                        MySharedPreferences.getInstance().setDepartment(department);
-                        MySharedPreferences.getInstance().setPhone(phone);
-                        Toast.makeText(getBaseContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        MySharedPreferences.getInstance().setName(mMcvName.getText().toString());
+                        MySharedPreferences.getInstance().setDepartment(mMcvDepartment.getText().toString());
+                        MySharedPreferences.getInstance().setPosition(mMcvPosition.getText().toString());
+                        MySharedPreferences.getInstance().setPhone(mMcvPhone.getText().toString());
+                        showToast("修改成功");
+                        setResult(RESULT_OK);
                         finish();
                     }
                 })

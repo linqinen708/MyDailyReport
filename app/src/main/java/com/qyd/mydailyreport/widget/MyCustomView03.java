@@ -245,6 +245,10 @@ public class MyCustomView03 extends View {
         return mcv03_value;
     }
 
+    public void setText(String text){
+        setMcv03_value(text);
+    }
+
     public void setMcv03_value(String mcv03_value) {
         this.mcv03_value = mcv03_value;
         invalidate();

@@ -1,5 +1,6 @@
 package com.qyd.mydailyreport.ui.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,6 +54,8 @@ public class MineFragment extends BaseFragment {
 
     Unbinder unbinder;
 
+    private static final int REQUEST_CODE = 1001;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,9 +70,10 @@ public class MineFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        mTvName.setText(MySharedPreferences.getInstance().getName());
-//        mTvDepartment.setText(MySharedPreferences.getInstance().getDepartment());
-//        mTvPhone.setText(MySharedPreferences.getInstance().getPhone());
+        mTvName.setText(MySharedPreferences.getInstance().getName());
+        mMcvDepartment.setText(MySharedPreferences.getInstance().getDepartment());
+        mMcvPosition.setText(MySharedPreferences.getInstance().getPosition());
+        mMcvPhone.setText(MySharedPreferences.getInstance().getPhone());
     }
 
     @Override
@@ -78,13 +82,25 @@ public class MineFragment extends BaseFragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK){
+            LogT.i("刷新数据:" );
+            mTvName.setText(MySharedPreferences.getInstance().getName());
+            mMcvDepartment.setText(MySharedPreferences.getInstance().getDepartment());
+            mMcvPhone.setText(MySharedPreferences.getInstance().getPhone());
+            mMcvPosition.setText(MySharedPreferences.getInstance().getPosition());
+        }
+    }
+
     @OnClick({R.id.civ_head_portrait, R.id.mcv_modify, R.id.mcv_remind, R.id.btn_exit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_head_portrait:
                 break;
             case R.id.mcv_modify:
-                startActivity(new Intent(getContext(), PersonalDataActivity.class));
+                startActivityForResult(new Intent(getContext(), PersonalDataActivity.class),REQUEST_CODE);
                 break;
             case R.id.mcv_remind:
                 break;
