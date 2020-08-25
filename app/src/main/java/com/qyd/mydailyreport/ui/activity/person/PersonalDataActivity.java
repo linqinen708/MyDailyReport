@@ -63,6 +63,7 @@ public class PersonalDataActivity extends BaseActivity {
 
         MyRetrofit.getInstance()
                 .getRetrofitServiceImpl()
+//                .updatePersonalData(mMcvDepartment.getText().toString())//发送http请求
                 .updatePersonalData(body)//发送http请求
                 .map(new MyRetrofit.ServerResponseFunc<EmptyObject>())
                 .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
@@ -75,8 +76,7 @@ public class PersonalDataActivity extends BaseActivity {
                         MySharedPreferences.getInstance().setPosition(mMcvPosition.getText().toString());
                         MySharedPreferences.getInstance().setPhone(mMcvPhone.getText().toString());
                         showToast("修改成功");
-                        setResult(RESULT_OK);
-                        finish();
+                        setResult(RESULT_OK);                        finish();
                     }
                 })
         ;

@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.linqinen.library.utils.LogT;
 import com.qyd.mydailyreport.R;
@@ -110,7 +109,7 @@ public class DepartmentFragment extends BaseFragment {
                             mAdapter.getItems().clear();
                             mAdapter.getItems().addAll(bean.getReportDetailList());
                         } else {
-                            Toast.makeText(getActivity(), "暂无数据", Toast.LENGTH_SHORT).show();
+                            showToast("暂无数据");
                         }
                     }
 

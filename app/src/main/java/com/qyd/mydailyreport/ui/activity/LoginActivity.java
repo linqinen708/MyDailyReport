@@ -14,8 +14,9 @@ import com.qyd.mydailyreport.R;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.constants.MyExtra;
 import com.qyd.mydailyreport.constants.MyRequestCode;
+import com.qyd.mydailyreport.retrofit.MyObserver;
 import com.qyd.mydailyreport.retrofit.MyRetrofit;
-import com.qyd.mydailyreport.retrofit.RxSubscribe2;
+import com.qyd.mydailyreport.retrofit.MyRetrofitHelper;
 import com.qyd.mydailyreport.ui.activity.base.BaseActivity;
 import com.qyd.mydailyreport.utils.MySharedPreferences;
 
@@ -26,8 +27,6 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity {
 
@@ -101,31 +100,24 @@ public class LoginActivity extends BaseActivity {
         map.put("account", mAutoCompleteTextViewAccount.getText().toString());
         map.put("password", mAutoCompleteTextViewPassword.getText().toString());
 
-        MyRetrofit.getInstance()
-                .getRetrofitServiceImpl()
-                .loginByPost2(map)//发送http请求
-                .map(new MyRetrofit.ServerResponseFunc<LoginBean>())
-                .subscribeOn(Schedulers.io())//切换到io线程执行Http请求
-                .observeOn(AndroidSchedulers.mainThread())//发送请求给主线程执行下面代码
-                .subscribe(new RxSubscribe2<LoginBean>(this) {
-                    @Override
-                    public void onNext(LoginBean bean) {
-                        if (bean == null || bean.getUser() == null) {
-                            Toast.makeText(getBaseContext(), "数据异常", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        MySharedPreferences.getInstance().setName(bean.getUser().getName());
-                        MySharedPreferences.getInstance().setDepartment(bean.getUser().getDepartment());
-                        MySharedPreferences.getInstance().setId(bean.getUser().getId());
-                        MySharedPreferences.getInstance().setToken(bean.getUser().getToken());
-                        MySharedPreferences.getInstance().setPhone(bean.getUser().getPhone());
+        MyRetrofitHelper.INSTANCE.httpLogin(map, new MyObserver<LoginBean>(mContext) {
+            @Override
+            protected void onSuccess(LoginBean bean) {
+                if (bean == null || bean.getUser() == null) {
+                    Toast.makeText(getBaseContext(), "数据异常", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                MySharedPreferences.getInstance().setName(bean.getUser().getName());
+                MySharedPreferences.getInstance().setDepartment(bean.getUser().getDepartment());
+                MySharedPreferences.getInstance().setId(bean.getUser().getId());
+                MySharedPreferences.getInstance().setToken(bean.getUser().getToken());
+                MySharedPreferences.getInstance().setPhone(bean.getUser().getPhone());
 
-                        MyRetrofit.setToken(bean.getUser().getToken());
-                        startActivity(new Intent(mContext, HomeActivity2.class));
-                        finish();
-                    }
-                });
-
+                MyRetrofit.setToken(bean.getUser().getToken());
+                startActivity(new Intent(mContext, HomeActivity2.class));
+                finish();
+            }
+        });
     }
 
 

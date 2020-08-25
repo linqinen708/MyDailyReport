@@ -1,10 +1,10 @@
 package com.qyd.mydailyreport.retrofit;
 
-import com.qyd.mydailyreport.ui.activity.person.PersonalInfoBody;
 import com.qyd.mydailyreport.bean.CurrentReportDetailBean;
 import com.qyd.mydailyreport.bean.LoginBean;
 import com.qyd.mydailyreport.bean.ReportDetailBean;
 import com.qyd.mydailyreport.body.RegisterBody;
+import com.qyd.mydailyreport.ui.activity.person.PersonalInfoBody;
 
 import java.util.Map;
 
@@ -14,9 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Created by 林 on 2017/9/30.
@@ -28,12 +26,6 @@ import retrofit2.http.Path;
  */
 
 public interface RetrofitServiceImpl {
-
-    @GET("users/{user}")
-    Call<ResponseBody> getUserString(@Path("user") String user);
-
-    @GET("/")
-    Call<ResponseBody> helloWorld();
 
     @POST("/loginbypost")
     @FormUrlEncoded
@@ -52,6 +44,7 @@ public interface RetrofitServiceImpl {
     /**修改个人资料*/
     @POST("/updatePersonalData")
     Observable<HttpResult<EmptyObject>> updatePersonalData(@Body PersonalInfoBody body);
+//    Observable<HttpResult<EmptyObject>> updatePersonalData(@Field("department") String body);
 
     /**查看个人所有历史日报*/
     @POST("/getReportDetailList")

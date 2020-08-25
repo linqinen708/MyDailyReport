@@ -22,5 +22,15 @@ object MyRetrofitHelper {
                 .subscribe(observer)
 
     }
+    fun httpLogin(params: Map<String,Any>, observer: MyObserver<LoginBean>) {
+        MyRetrofit.getInstance()
+                .retrofitServiceImpl
+                .loginByPost2(params)
+                .map(MyRetrofit.ServerResponseFunc<LoginBean>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer)
+
+    }
 
 }

@@ -92,19 +92,6 @@ public abstract class MyObserver<T> extends DisposableObserver<T> {
                         LogT.i("用户主动取消请求11isDisposed():" + isDisposed());
                     }
                 });
-//                if (progressDialog.getWindow() != null) {
-//                    //如果背景是有圆角，去除掉白色的矩形边框，否则有白色背景（其实就是将白色背景透明化）
-//                    progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    progressDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-//                        @Override
-//                        public void onShow(DialogInterface dialogInterface) {
-//                            //将布局缩小到实际布局大小，默认会是窗口大小，只有在显示的时候有效
-//                            progressDialog.getWindow().setLayout(progressBar.getWidth(), progressBar.getHeight());
-//                        }
-//                    });
-//                    /*背景不半透明*/
-//                    progressDialog.getWindow().setDimAmount(0);
-//                }
                 progressDialog.show();
             } else if (!progressDialog.isShowing()) {
                 progressDialog.show();
