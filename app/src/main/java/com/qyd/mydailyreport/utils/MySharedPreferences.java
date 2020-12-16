@@ -106,12 +106,16 @@ public class MySharedPreferences {
         if(mSharedPreferences == null){
             throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
         }
-        return mSharedPreferences.getString("token",null);
+        return mSharedPreferences.getString("token","");
     }
 
     public void setToken(String token) {
         if(mSharedPreferences == null){
             throw new NullPointerException("你还没有调用init(Context context)方法进行初始化");
+        }
+        /*因为header 不能用null，所以只能用空字符串*/
+        if(token == null){
+            token = "";
         }
         mSharedPreferences.edit().putString("token", token).apply();
     }

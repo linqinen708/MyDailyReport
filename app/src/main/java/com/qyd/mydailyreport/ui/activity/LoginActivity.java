@@ -38,17 +38,17 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String name = MySharedPreferences.getInstance().getName();
-        LogT.i("name:" + name);
-        if (name != null) {
-            startActivity(new Intent(this, HomeActivity2.class));
-            finish();
-        } else {
+        String token = MySharedPreferences.getInstance().getToken();
+        LogT.i("token:" + token);
+        if (TextUtils.isEmpty(token)) {
             setContentView(R.layout.activity_login);
             ButterKnife.bind(this);
             mAutoCompleteTextViewAccount.setText(MySharedPreferences.getInstance().getAccount());
             mAutoCompleteTextViewPassword.setText(MySharedPreferences.getInstance().getPassword());
             debug();
+        } else {
+            startActivity(new Intent(this, HomeActivity2.class));
+            finish();
         }
     }
 

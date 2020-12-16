@@ -35,8 +35,8 @@ import static okhttp3.internal.Util.UTF_8;
 
 public class MyRetrofit {
 
-    //        private final String MAIN_ENGINE = "http://47.100.229.22:8090/";
-    private static final String MAIN_ENGINE = "http://10.0.2.2:8090/";//本地地址，无法直接使用localhost，连接不上
+            private final String MAIN_ENGINE = "http://47.100.229.22:8090/";
+//    private static final String MAIN_ENGINE = "http://10.0.2.2:8090/";//本地地址，无法直接使用localhost，连接不上
 
     private static final int DEFAULT_TIMEOUT = 10;//默认超时时间
     private RetrofitServiceImpl mRetrofitServiceImpl;//Retrofit 接口

@@ -110,7 +110,7 @@ public class MineFragment extends BaseFragment {
                         .setPositiveButton("是", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                MySharedPreferences.getInstance().setName(null);
+                                MySharedPreferences.getInstance().setToken("");
                                 LogT.i("name:" + MySharedPreferences.getInstance().getName());
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
                                 getActivity().finish();
